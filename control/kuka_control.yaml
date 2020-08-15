@@ -1,0 +1,38 @@
+kuka_lwr:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  arm_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints:
+      - kuka_arm_0_joint
+      - kuka_arm_1_joint
+      - kuka_arm_2_joint
+      - kuka_arm_3_joint
+      - kuka_arm_4_joint
+      - kuka_arm_5_joint
+      - kuka_arm_6_joint
+
+    constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      kuka_arm_0_joint: {goal: 0.1, trajectory: 0.1}
+      kuka_arm_1_joint: {goal: 0.1, trajectory: 0.1}
+      kuka_arm_2_joint: {goal: 0.1, trajectory: 0.1}
+      kuka_arm_3_joint: {goal: 0.1, trajectory: 0.1}
+      kuka_arm_4_joint: {goal: 0.1, trajectory: 0.1}
+      kuka_arm_5_joint: {goal: 0.1, trajectory: 0.1}
+      kuka_arm_6_joint: {goal: 0.1, trajectory: 0.1}
+
+    gains:
+      kuka_arm_0_joint: {p: 500.0, i: 0.01, d: 10.0, i_clamp: 10}
+      kuka_arm_1_joint: {p: 10000.0, i: 10, d: 10.0, i_clamp: 10}
+      kuka_arm_2_joint: {p: 500.0, i: 0.01, d: 5.0, i_clamp: 10}
+      kuka_arm_3_joint: {p: 2000.0, i: 0.01, d: 50.0, i_clamp: 10}
+      kuka_arm_4_joint: {p: 200.0, i: 0.01, d: 2.0, i_clamp: 10}
+      kuka_arm_5_joint: {p: 200.0, i: 0.01, d: 5.0, i_clamp: 10}
+      kuka_arm_6_joint: {p: 100.0, i: 0, d: 1.0, i_clamp: 10}
+
+    state_publish_rate: 50
+    action_monitor_rate: 50

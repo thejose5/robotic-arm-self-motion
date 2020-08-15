@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch Gazebo World -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="use_sim_time" value="true"/>
+    <arg name="debug" value="false"/>
+    <arg name="gui" value="true" />
+    <arg name="paused" value="false"/>
+  </include>
+
+  <!-- Launch robot by through URDF-->
+  <param name="robot_description" command="cat $(find nullspace_obst_avoidance)/model/kuka1.urdf"/>
+  <node name="LWR" pkg="gazebo_ros" type="spawn_model" output="screen" args="-file $(find nullspace_obst_avoidance)/model/kuka1.urdf -urdf -model LWR" />
+
+  <!-- Launch robot -->
+  <!-- <arg name="model" default="$(find nullspace_obst_avoidance)/model/kuka_lwr_arm.urdf.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro -inorder $(arg model)" />
+
+  <node name="LWR" pkg="gazebo_ros" type="spawn_model" output="screen"
+         args="-urdf -param robot_description -model LWR
+        -J kuka_arm_0_joint 0
+        -J kuka_arm_1_joint 0.8
+        -J kuka_arm_2_joint -0.2
+        -J kuka_arm_3_joint 2
+        -J kuka_arm_4_joint 0.5
+        -J kuka_arm_5_joint -0.9
+        -J kuka_arm_6_joint 0" /> -->
+ <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
+
+  <!-- LOAD CONTROLLER -->
+  <include file="$(find nullspace_obst_avoidance)/control/kuka_control.launch"></include>
+
+</launch>

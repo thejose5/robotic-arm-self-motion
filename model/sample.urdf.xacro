@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot name="kuka_lwr" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+ <property name="M_PI" value="3.14" />
+ <property name="name" value="kuka" />
+  <!--
+     Little helper macro to define the inertia matrix needed
+     for links.
+     -->
+  <!-- width is along x axis
+       length is along y axis
+       height is along z axis
+  -->
+  <macro name="cuboid_inertia_def" params="width height length mass">
+    <inertia ixx="${mass * (height * height + length * length) / 12}"
+             iyy="${mass * (width * width + height * height) / 12}"
+             izz="${mass * (width * width + length * length) / 12}"
+             ixy="0" iyz="0" ixz="0"/>
+  </macro>
+
+  <!-- length is along the y-axis! -->
+  <macro name="cylinder_inertia_def" params="radius length mass">
+    <inertia ixx="${mass * (3 * radius * radius + length * length) / 12}"
+             iyy="${mass * radius* radius / 2}"
+             izz="${mass * (3 * radius * radius + length * length) / 12}"
+             ixy="0" iyz="0" ixz="0"/>
+  </macro>
+
+  <property name="arm_elem_link_mass" value="2.0"/>
+  <property name="arm_elem_ball_link_mass" value="2.0"/>
+  <property name="arm_elem_end_link_mass" value="2.0"/>
+  <property name="safety_controller_k_pos" value="100" />
+  <property name="safety_controller_k_vel" value="2" />
+  <property name="joint_damping" value="0.1" />
+
+  <property name="arm_velocity_scale_factor" value="1"/>
+  <property name="right" value="0" />
+  <!-- right is either 1 (for right arm) or -1 (for left arm) -->
+
+
+  <link name="base_link"/>
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <child link="calib_${name}_arm_base_link"/>
+    <parent link="base_link"/>
+  </joint>
+
+  <!-- Sample Link -->
+  <link name = "calib_${name}_arm_base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://lmtlwr/model/meshes_arm/arm_base.stl"/>
+      </geometry>
+      <material name = "blue"/>
+      <origin xyz = "0 0 0.025"/>
+    </visual>
+    <inertial>
+      <mass value="1" />
+      <origin xyz="0 0 0.025" rpy="0 0 0" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <collision>
+      <geometry>
+        <mesh filename="package://lmtlwr/model/meshes_arm/convex/arm_base_convex.stl"/>
+      </geometry>
+      <material name = "blue"/>
+      <origin xyz = "0 0 0.025"/>
+    </collision>
+  </link>
+  <!-- Added by TJ -->
+  <link name="${name}_arm_1_link">
+    <inertial>
+      <mass value="2"/>
+      <origin rpy="0 0 0" xyz="0 0.04 0.130"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 3.14"/>
+      <geometry>
+        <mesh filename="package://lmtlwr/model/meshes_arm/arm_segment_a.stl"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
+      <geometry>
+        <mesh filename="package://lmtlwr/model/meshes_arm/convex/arm_segment_a_convex.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="${name}_arm_0_joint" type="revolute">
+    <origin xyz="0 0 0.11" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.96" upper="2.96"
+           effort="204" velocity="3" />
+    <dynamics damping="0.1"/>
+    <parent link="calib_${name}_arm_base_link"/>
+    <child link="${name}_arm_1_link"/>
+  </joint>
+
+</robot>
