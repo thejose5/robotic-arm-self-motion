@@ -137,9 +137,9 @@ add_dependencies(self_motion_commander nullspace_obst_avoidance_generate_message
 #target_link_libraries(calc_jacobian ${catkin_LIBRARIES})
 #add_dependencies(calc_jacobian nullspace_obst_avoidance_generate_messages_cpp)
 
-#add_executable(testing_jacobian src/testing_jacobian.cpp src/#calc_jacobian.cpp)
-#target_link_libraries(testing_jacobian ${catkin_LIBRARIES})
-#add_dependencies(testing_jacobian #nullspace_obst_avoidance_generate_messages_cpp)
+add_executable(testing_jacobian src/testing_jacobian.cpp src/calc_jacobian.cpp)
+target_link_libraries(testing_jacobian ${catkin_LIBRARIES})
+add_dependencies(testing_jacobian nullspace_obst_avoidance_generate_messages_cpp)
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}

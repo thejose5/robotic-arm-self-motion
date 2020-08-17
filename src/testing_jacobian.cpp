@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 
-Eigen::Matrix<float,6,7> calcJacobian(tf::TransformListener &listener);
+Eigen::Matrix<double,6,7> calcJacobian(tf::TransformListener &listener);
 
 int main(int argc, char **argv)
 {
@@ -15,7 +15,9 @@ int main(int argc, char **argv)
   tf::TransformListener lstnr;
   ros::Rate rate(10.0);
 
+  // while(ros::ok()){
   calcJacobian(lstnr);
+// }
 
   return 0;
 }

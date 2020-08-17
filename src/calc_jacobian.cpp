@@ -37,12 +37,12 @@ Eigen::Matrix<double,6,7> calcJacobian(tf::TransformListener &listener){
     tf::StampedTransform transform;
     string target_link = "/kuka_arm_"+to_string(i+1)+"_link";
     try{
-      cout<<target_link<<endl;
+      // cout<<target_link<<endl;
       listener.lookupTransform("/calib_kuka_arm_base_link",target_link,
                              ros::Time(0), transform);
        }
     catch (tf::TransformException &ex){
-       ROS_ERROR("%s",ex.what());
+       ROS_ERROR("%s \nTrying Again.",ex.what());
        ros::Duration(1.0).sleep();
        --i;
        continue;
@@ -52,6 +52,10 @@ Eigen::Matrix<double,6,7> calcJacobian(tf::TransformListener &listener){
     float x = transform.getRotation().getAxis().x() * sqrt(1-w*w); //getAxis returns (x,y,z)/sin(theta/2)
     float y = transform.getRotation().getAxis().y() * sqrt(1-w*w);
     float z = transform.getRotation().getAxis().z() * sqrt(1-w*w);
+    // cout<<transform.getRotation().getAngle()<<endl;
+    // cout<<transform.getRotation().getAxis().x()<<" "
+    //     <<transform.getRotation().getAxis().y()<<" "
+    //     <<transform.getRotation().getAxis().z()<<"\n";
     Eigen::Quaterniond quaternion(w,x,y,z);
     //Finding O
     Eigen::Vector3d position(transform.getOrigin().x(), transform.getOrigin().y(), transform.getOrigin().z());
@@ -80,15 +84,15 @@ Eigen::Matrix<double,6,7> calcJacobian(tf::TransformListener &listener){
     jacobian(5,i) = zs[i].z();
   }
   /*************COMMENT OUT AFTER DEBUGGING****************/
-  for(int i=0; i<njoints; i++){
-    cout<<"------------------"<<endl;
-    cout<<"Joint "<<i<<endl;
-    cout<<"------------------"<<endl;
-    cout<<"Rotation Matrix:"<<endl;
-    cout<<rotation_matrices[i]<<endl;;
-    cout<<"Position(O):"<<endl;
-    cout<<positions[i]<<endl;
-  }
+  // for(int i=0; i<njoints; i++){
+  //   cout<<"------------------"<<endl;
+  //   cout<<"Joint "<<i<<endl;
+  //   cout<<"------------------"<<endl;
+  //   cout<<"Rotation Matrix:"<<endl;
+  //   cout<<rotation_matrices[i]<<endl;;
+  //   cout<<"Position(O):"<<endl;
+  //   cout<<positions[i]<<endl;
+  // }
   cout<<"------------------"<<endl;
   cout<<"Jacobian: "<<endl;
   cout<<"------------------\n"<<endl;

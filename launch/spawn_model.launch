@@ -5,16 +5,26 @@
     <arg name="use_sim_time" value="true"/>
     <arg name="debug" value="false"/>
     <arg name="gui" value="true" />
-    <arg name="paused" value="false"/>
+    <arg name="paused" value="true"/>
   </include>
 
   <!-- Launch robot by through URDF-->
   <param name="robot_description" command="cat $(find nullspace_obst_avoidance)/model/kuka1.urdf"/>
-  <node name="LWR" pkg="gazebo_ros" type="spawn_model" output="screen" args="-file $(find nullspace_obst_avoidance)/model/kuka1.urdf -urdf -model LWR" />
+  <node name="LWR" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-urdf -param robot_description -model LWR
+    -J kuka_arm_0_joint 0
+    -J kuka_arm_1_joint -0.34
+    -J kuka_arm_2_joint 0
+    -J kuka_arm_3_joint -1.49
+    -J kuka_arm_4_joint 0
+    -J kuka_arm_5_joint -0.72
+    -J kuka_arm_6_joint 0" />
 
   <!-- Launch robot -->
   <!-- <arg name="model" default="$(find nullspace_obst_avoidance)/model/kuka_lwr_arm.urdf.xacro"/>
   <param name="robot_description" command="$(find xacro)/xacro -inorder $(arg model)" />
+
+-file $(find nullspace_obst_avoidance)/model/kuka1.urdf -urdf -model LWR
 
   <node name="LWR" pkg="gazebo_ros" type="spawn_model" output="screen"
          args="-urdf -param robot_description -model LWR
