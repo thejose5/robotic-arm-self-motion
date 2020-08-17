@@ -19,12 +19,12 @@
     </plugin>
   </gazebo>
   <!-- right is either 1 (for right arm) or -1 (for left arm) -->
-  <link name="world"/>
+  <link name="base_link"/>
   <joint name="base_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.055"/>
     <axis xyz="0 0 1"/>
     <child link="calib_kuka_arm_base_link"/>
-    <parent link="world"/>
+    <parent link="base_link"/>
   </joint>
   <link name="calib_kuka_arm_base_link">
     <inertial>

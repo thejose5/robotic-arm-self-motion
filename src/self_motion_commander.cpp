@@ -106,8 +106,8 @@ std::vector<double> findInitJPos(tf::TransformListener &listener){
   //**************************************
 
   for(int i=2; i<=njoints; i++){
-    std::string basis_link = "/kuka_arm_"+std::to_string(i)+"_link";
-    std::string target_link = "/kuka_arm_"+std::to_string(i-1)+"_link";
+    std::string basis_link = "/kuka_arm_"+std::to_string(i-1)+"_link";
+    std::string target_link = "/kuka_arm_"+std::to_string(i)+"_link";
     try{
       listener.lookupTransform(basis_link,target_link, ros::Time(0), transform);
     }
