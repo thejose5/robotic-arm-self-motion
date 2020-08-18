@@ -13,9 +13,9 @@
   <node name="LWR" pkg="gazebo_ros" type="spawn_model" output="screen"
     args="-urdf -param robot_description -model LWR
     -J kuka_arm_0_joint 0
-    -J kuka_arm_1_joint -0.34
+    -J kuka_arm_1_joint 0.34
     -J kuka_arm_2_joint 0
-    -J kuka_arm_3_joint -1.49
+    -J kuka_arm_3_joint 1.49
     -J kuka_arm_4_joint 0
     -J kuka_arm_5_joint -0.72
     -J kuka_arm_6_joint 0" />
