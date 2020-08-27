@@ -133,6 +133,10 @@ add_executable(self_motion_commander src/self_motion_commander.cpp src/calc_jaco
 target_link_libraries(self_motion_commander ${catkin_LIBRARIES})
 add_dependencies(self_motion_commander nullspace_obst_avoidance_generate_messages_cpp)
 
+add_executable(self_motion_commander_v2 src/self_motion_commander_v2.cpp src/calc_jacobian.cpp)
+target_link_libraries(self_motion_commander_v2 ${catkin_LIBRARIES})
+add_dependencies(self_motion_commander_v2 nullspace_obst_avoidance_generate_messages_cpp)
+
 #add_executable(calc_jacobian src/calc_jacobian.cpp)
 #target_link_libraries(calc_jacobian ${catkin_LIBRARIES})
 #add_dependencies(calc_jacobian nullspace_obst_avoidance_generate_messages_cpp)

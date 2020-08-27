@@ -41,7 +41,7 @@
       <material name="Orange"/>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.055"/>
       <geometry>
         <mesh filename="package://nullspace_obst_avoidance/model/meshes_arm/convex/arm_base_convex.stl"/>
       </geometry>
@@ -50,7 +50,7 @@
   <link name="kuka_arm_1_link">
     <inertial>
       <mass value="2.0"/>
-      <origin rpy="0 0 0" xyz="0 0.04 0.130"/>
+      <origin rpy="0 0 3.14159265359" xyz="0 0.04 0.130"/>
       <inertia ixx="0.0136666666667" ixy="0" ixz="0" iyy="0.0118666666667" iyz="0" izz="0.003"/>
     </inertial>
     <visual>
@@ -61,7 +61,7 @@
       <material name="Orange"/>
     </visual>
     <collision>
-      <origin rpy="0 0 3.14159265359" xyz="0 0 0"/>
+      <origin rpy="0 0 3.14159265359" xyz="0 0.04 0.130"/>
       <geometry>
         <mesh filename="package://nullspace_obst_avoidance/model/meshes_arm/convex/arm_segment_a_convex.stl"/>
       </geometry>
@@ -71,7 +71,7 @@
     <origin rpy="0 0 0" xyz="0 0 0.11"/>
     <axis xyz="0 0 1"/>
     <limit effort="204" lower="-2.96705972839" upper="2.96705972839" velocity="1.91986217719"/>
-    <dynamics damping="1"/>
+    <dynamics friction="20"/>
     <parent link="calib_kuka_arm_base_link"/>
     <child link="kuka_arm_1_link"/>
   </joint>
@@ -88,7 +88,7 @@
   <link name="kuka_arm_2_link">
     <inertial>
       <mass value="2.0"/>
-      <origin rpy="0 0 0" xyz="0 -0.04 0.07"/>
+      <origin rpy="0 0 0" xyz="0 0 0.2"/>
       <inertia ixx="0.0136666666667" ixy="0" ixz="0" iyy="0.0118666666667" iyz="0" izz="0.003"/>
     </inertial>
     <visual>
@@ -108,11 +108,8 @@
   <joint name="kuka_arm_1_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.20"/>
     <axis xyz="0 -1 0"/>
-    <!--limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}"
-             effort="306" velocity="${arm_velocity_scale_factor * 110 * M_PI / 180}" /-->
-    <!-- nalt: Reduced limits to avoid contact with table - kinda hacky, should not be done here -->
     <limit effort="306" lower="-1.57079632679" upper="1.57079632679" velocity="1.91986217719"/>
-    <dynamics damping="1"/>
+    <dynamics friction="1"/>
     <parent link="kuka_arm_1_link"/>
     <child link="kuka_arm_2_link"/>
   </joint>
@@ -129,7 +126,7 @@
   <link name="kuka_arm_3_link">
     <inertial>
       <mass value="2.0"/>
-      <origin rpy="0 0 0" xyz="0 -0.04 0.130"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <inertia ixx="0.0136666666667" ixy="0" ixz="0" iyy="0.0118666666667" iyz="0" izz="0.003"/>
     </inertial>
     <visual>
